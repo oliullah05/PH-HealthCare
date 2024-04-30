@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
- <div className="underline"><Button variant="contained">Contained</Button>
- <Button variant="outlined">Outlined</Button></div>
+ <div className="underline"><Button>Contained</Button>
+ <Button>Outlined</Button></div>
   );
 }
