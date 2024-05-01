@@ -22,9 +22,13 @@ const Footer = () => {
                     <Image width={30} height={30} src={facebookIcon} alt="Facebook"></Image>
                 </Stack>
 
-                <div className="border-b-8 text-white border-dashed">
-                    dfgdfgdfg
-                </div>
+                <Box sx={{
+                    borderBottomWidth:"20px",
+                    borderBottomColor:"red"
+                    // border:"1px solid red"
+                }}>
+                    
+                </Box>
 
                 <Stack direction="row" gap={2} justifyContent="space-between" alignItems="center" py={3} >
                     <Typography component="p" color="#fff">
