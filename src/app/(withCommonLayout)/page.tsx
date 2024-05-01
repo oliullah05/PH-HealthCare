@@ -1,8 +1,10 @@
 import HeroSection from "@/components/ui/home/heroSection/HeroSection";
 import Specialist from "@/components/ui/home/specialist/Specialist";
 import TopRatedDoctors from "@/components/ui/home/topRatedDoctors/TopRatedDoctors";
-import { Button } from "@mui/material";
-import Image from "next/image";
+import WhyUs from "@/components/ui/home/whyUs/WhyUs";
+
+
+
 
 export default function Home() {
   return (
@@ -10,6 +12,7 @@ export default function Home() {
       <HeroSection></HeroSection>
       <Specialist></Specialist>
       <TopRatedDoctors></TopRatedDoctors>
+      <WhyUs></WhyUs>
     </>
   );
 }
