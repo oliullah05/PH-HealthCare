@@ -1,5 +1,6 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material';
-
+import Image from 'next/image';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import React from 'react';
 
 const TopRatedDoctors = async () => {
@@ -27,37 +28,54 @@ const TopRatedDoctors = async () => {
             </Box>
 
 
-                                        {/* doctors */}
-            <Container>
+            {/* doctors */}
+            <Container sx={{
+                margin: "30px auto"
+            }}>
                 <Grid container spacing={2}>
-     {
-        doctors.map((doctor:any)=>(
-        <Grid item key={doctor.id} md={4}>
-                <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        component="img"
-        alt="green iguana"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
-        </Grid>
-        ))
-     }
+                    {
+
+                        doctors.map((doctor: any) => (
+                            <Grid item key={doctor.id} md={4}>
+                                <Card sx={{}}>
+                                    <Box><Image src={doctor.profilePhoto} alt="doctor" width={500} height={200}></Image></Box>
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            {doctor.name}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {doctor.qualification},  {doctor.designation}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary" mt={1} sx={{
+                                            display:"flex",
+                                            alignItems:"center"
+                                        }}>
+                                            <LocationOnIcon></LocationOnIcon> {doctor.address}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions sx={{
+                                        justifyContent: "space-between",
+                                        px: 2,
+                                        paddingBottom: "20px"
+                                    }}>
+                                        <Button size="small">Book Now</Button>
+                                        <Button size="small" variant='outlined'>View Profile</Button>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        ))
+                    }
                 </Grid>
+
+                <Box sx={{
+                   textAlign:"center"
+
+                }
+                }>
+                <Button variant='outlined' sx={{
+                    marginTop: "20px"
+                }}>View All</Button>
+                </Box>
             </Container>
 
         </Box>
