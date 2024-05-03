@@ -1,9 +1,35 @@
+"use client"
+
 import { Box, Button, Container, Grid, Stack, TextField, Typography } from '@mui/material';
 import Image from 'next/image';
 import assets from '@/assets';
 import Link from 'next/link';
+import { useForm, SubmitHandler } from "react-hook-form"
+
+interface IPatientData {
+    name: string
+    email: string
+    contactNumber:string
+    address:string
+}
+
+type IPatientRegisterFormData= {
+    patient:IPatientData
+    password:string
+  }
+  
 
 const Register = () => {
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+      } = useForm<IPatientRegisterFormData>()
+      const onSubmit: SubmitHandler<IPatientRegisterFormData> = (data) => console.log(data)
+
+
+
     return (
         <Container sx={{
 
@@ -31,7 +57,7 @@ const Register = () => {
 
 
                     <Box>
-                        <form>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <Grid container spacing={2}>
 
                                 <Grid item md={12} my={1}>
@@ -40,6 +66,7 @@ const Register = () => {
                                         size='small'
                                         variant="outlined"
                                         fullWidth
+                                        {...register("patient.name")}
 
                                     />
                                 </Grid>
@@ -50,6 +77,7 @@ const Register = () => {
                                         size='small'
                                         variant="outlined"
                                         fullWidth
+                                        {...register("patient.email")}
                                     />
                                 </Grid>
                                 <Grid item md={6} my={1}>
@@ -59,6 +87,7 @@ const Register = () => {
                                         type='password'
                                         variant="outlined"
                                         fullWidth
+                                        {...register("password")}
                                     />
                                 </Grid>
 
@@ -69,6 +98,7 @@ const Register = () => {
                                         size='small'
                                         variant="outlined"
                                         fullWidth
+                                        {...register("patient.contactNumber")}
                                     />
                                 </Grid>
                                 <Grid item md={6} my={1}>
@@ -78,12 +108,13 @@ const Register = () => {
                                         type='text'
                                         variant="outlined"
                                         fullWidth
+                                        {...register("patient.address")}
                                     />
                                 </Grid>
 
                             </Grid>
 
-                            <Box my={4}><Button fullWidth >Register</Button></Box>
+                            <Box my={4}><Button fullWidth type='submit'>Register</Button></Box>
                             <Box><Typography component='p' fontWeight={400}>Do you alrady have an account? <Link href={"/login"}>Login</Link></Typography>
                             </Box>
                         </form>
