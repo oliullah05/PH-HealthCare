@@ -6,31 +6,51 @@ import assets from '@/assets';
 import Link from 'next/link';
 import { useForm, SubmitHandler } from "react-hook-form"
 import { modifyPayload } from '@/utils/modifyPayload';
+import { registerPatient } from '@/services/actions/registerPatient';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+
 
 interface IPatientData {
     name: string
     email: string
-    contactNumber:string
-    address:string
+    contactNumber: string
+    address: string
 }
 
-type IPatientRegisterFormData= {
-    patient:IPatientData
-    password:string
-  }
-  
+type IPatientRegisterFormData = {
+    patient: IPatientData
+    password: string
+}
+
 
 const Register = () => {
+const router = useRouter()
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
-      } = useForm<IPatientRegisterFormData>()
-      const onSubmit: SubmitHandler<IPatientRegisterFormData> = (values) => {
-      const data =  modifyPayload(values)
-      console.log(data.getAll("data"));
-      }
+    } = useForm<IPatientRegisterFormData>()
+
+
+
+    const onSubmit: SubmitHandler<IPatientRegisterFormData> = async(values) => {
+        const data = modifyPayload(values)
+        try {
+            const res = await registerPatient(data)
+            if(res?.data?.id){
+                toast.success(res.message)
+               router.push("/login")
+            }
+            else{
+                toast.error(res.message)
+            }
+        }
+        catch (err: any) {
+            toast.error("something went wrong")
+        }
+    }
 
 
 
@@ -41,7 +61,7 @@ const Register = () => {
             <Stack sx={{
                 justifyContent: "center",
                 alignItems: "center",
-                height:"100vh"
+                height: "100vh"
             }}>
                 <Box sx={{
                     maxWidth: 600,
