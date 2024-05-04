@@ -2,6 +2,7 @@
 
 import assets from '@/assets';
 import userLogin from '@/services/actions/userLogin';
+import { storeUserInfo } from '@/services/auth.service';
 
 import { Box, Button, Container, Grid, Stack, TextField, Typography } from '@mui/material';
 import Image from 'next/image';
@@ -24,17 +25,19 @@ const Login = () => {
     } = useForm<TLoginFormValues>()
 
     const onSubmit: SubmitHandler<TLoginFormValues> = async (values) => {
-console.log(values);
+
         try {
             const res = await userLogin(values)
-            console.log(res);
+            if(res?.data?.accessToken){
+                storeUserInfo(res?.data?.accessToken)
+            }
          
-            // if(res?.data?.id){
-            //     toast.success(res.message)
-            // }
-            // else{
-            //     toast.error(res.message)
-            // }
+            if(res?.data?.id){
+                toast.success(res.message)
+            }
+            else{
+                toast.error(res.message)
+            }
         }
         catch (err: any) {
             console.log(err);
