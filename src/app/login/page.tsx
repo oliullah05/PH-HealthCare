@@ -4,9 +4,10 @@ import assets from '@/assets';
 import userLogin from '@/services/actions/userLogin';
 import { storeUserInfo } from '@/services/auth.service';
 
-import { Box, Button, Container, Grid, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Stack, TextField, Typography, duration } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -17,6 +18,8 @@ export type TLoginFormValues = {
 }
 
 const Login = () => {
+
+    const router = useRouter()
     const {
         register,
         handleSubmit,
@@ -30,17 +33,15 @@ const Login = () => {
             const res = await userLogin(values)
             if(res?.data?.accessToken){
                 storeUserInfo(res?.data?.accessToken)
-            }
-         
-            if(res?.data?.id){
                 toast.success(res.message)
+                router.replace("/",{duration:2000})
             }
             else{
                 toast.error(res.message)
             }
         }
         catch (err: any) {
-            console.log(err);
+          
             toast.error("something went wrong")
         }
     }

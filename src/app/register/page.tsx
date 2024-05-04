@@ -9,6 +9,8 @@ import { modifyPayload } from '@/utils/modifyPayload';
 import { registerPatient } from '@/services/actions/registerPatient';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import userLogin from '@/services/actions/userLogin';
+import { storeUserInfo } from '@/services/auth.service';
 
 
 interface IPatientData {
@@ -39,9 +41,14 @@ const router = useRouter()
         const data = modifyPayload(values)
         try {
             const res = await registerPatient(data)
+           
             if(res?.data?.id){
                 toast.success(res.message)
-               router.push("/login")
+                const userInfo = await userLogin({password:values.password,email:values.patient.email})
+                if(userInfo?.data?.accessToken){
+                    storeUserInfo(userInfo?.data?.accessToken)
+                    router.replace("/",{duration:2000})
+                }
             }
             else{
                 toast.error(res.message)
